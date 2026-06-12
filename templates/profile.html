@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievo Trackr | Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="stars"></div>
+    <nav class="topbar">
+        <a class="logo" href="{{ url_for('dashboard') }}">Achievo Trackr</a>
+        <div>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+    <main class="container narrow">
+        <section class="panel profile">
+            <h1>{{ user.name }}</h1>
+            <p>{{ user.email }}</p>
+            <div class="profile-stats">
+                <span><strong>{{ today_score }}%</strong> today</span>
+                <span><strong>{{ current_streak }}</strong> current streak</span>
+                <span><strong>{{ best_streak }}</strong> best streak</span>
+                <span><strong>{{ user.points }}</strong> points</span>
+            </div>
+            <h2>Active Goals</h2>
+            {% for habit in habits %}
+                <p class="goal-chip" style="--accent: {{ habit.color }}">{{ habit.name }}: {{ habit.target }} {{ habit.unit }}</p>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

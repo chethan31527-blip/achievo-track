@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievo Trackr | Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+    <div class="stars"></div>
+    <main class="auth-shell">
+        <section class="brand-panel">
+            <p class="eyebrow">Student Habit OS</p>
+            <h1>Build study, gym, sleep, coding, and English streaks.</h1>
+            <p class="quote">"{{ quote }}"</p>
+        </section>
+        <section class="auth-card">
+            <h2>Create account</h2>
+            {% include "_messages.html" %}
+            <form method="post">
+                <label>Name<input type="text" name="name" required></label>
+                <label>Email<input type="email" name="email" required></label>
+                <label>Password<input type="password" name="password" minlength="6" required></label>
+                <button type="submit">Sign up</button>
+            </form>
+            <p>Already joined? <a href="{{ url_for('login') }}">Login</a></p>
+        </section>
+    </main>
+</body>
+</html>

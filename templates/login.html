@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievo Track | Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="auth-page">
+    <div class="stars"></div>
+    <main class="auth-shell">
+        <section class="brand-panel">
+            <h1 class="eyebrow">Achievo Track &#x1F680;</h1>
+            <h2>Track the habits that <br>build your future.</h2>
+            <p class="quote">"{{ quote }}"</p>
+        </section>
+        <section class="auth-card">
+            <h2>Login</h2>
+            {% include "_messages.html" %}
+            <form method="post">
+                <label>Email<input type="email" name="email" required></label>
+                <label>Password<input type="password" name="password" required></label>
+                <button type="submit">Sign in</button>
+            </form>
+            <p>New student? <a href="{{ url_for('signup') }}">Create account</a></p>
+        </section>
+    </main>
+</body>
+</html>

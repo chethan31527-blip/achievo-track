@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievo Trackr | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="stars"></div>
+    <nav class="topbar">
+        <a class="logo" href="{{ url_for('dashboard') }}">Achievo Trackr</a>
+        <div>
+            <a href="{{ url_for('add_habit') }}">Add Goal</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+    <main class="container">
+        <section class="hero">
+            <p class="eyebrow">Welcome, {{ user.name }}</p>
+            <h1>Today is worth {{ today_score }}/100.</h1>
+            <p class="quote">"{{ quote }}"</p>
+        </section>
+
+        {% include "_messages.html" %}
+
+        <section class="stats-grid">
+            <article><span>Current Streak</span><strong>{{ current_streak }}</strong><small>perfect days</small></article>
+            <article><span>Best Streak</span><strong>{{ best_streak }}</strong><small>days</small></article>
+            <article><span>Weekly Score</span><strong>{{ week_score }}%</strong><small>last 7 days</small></article>
+            <article><span>Monthly Score</span><strong>{{ month_score }}%</strong><small>last 30 days</small></article>
+            <article><span>Total Points</span><strong>{{ user.points }}</strong><small>earned</small></article>
+        </section>
+
+        <section class="panel">
+            <div class="section-title">
+                <h2>Daily Goals</h2>
+                <a href="{{ url_for('add_habit') }}">+ New goal</a>
+            </div>
+            <form method="post" class="habit-list">
+                {% for habit in habits %}
+                    {% set log = logs.get(habit.id) %}
+                    <div class="habit-row" style="--accent: {{ habit.color }}">
+                        <div>
+                            <strong>{{ habit.name }}</strong>
+                            <span>Goal: {{ habit.target }} {{ habit.unit }}</span>
+                        </div>
+                        <input type="number" min="0" name="progress_{{ habit.id }}" value="{{ log.progress if log else 0 }}">
+                        <span>{{ habit.unit }}</span>
+                        <a href="{{ url_for('edit_habit', habit_id=habit.id) }}">Edit</a>
+                    </div>
+                {% endfor %}
+                <button type="submit">Save today's progress</button>
+            </form>
+        </section>
+
+        <section class="chart-grid">
+            <article class="panel">
+                <h2>Weekly Consistency</h2>
+                <canvas id="weekChart" data-labels='{{ labels7 | tojson }}' data-scores='{{ scores7 | tojson }}'></canvas>
+            </article>
+            <article class="panel">
+                <h2>Monthly Consistency</h2>
+                <canvas id="monthChart" data-labels='{{ labels30 | tojson }}' data-scores='{{ scores30 | tojson }}'></canvas>
+            </article>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievo Trackr | {{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="stars"></div>
+    <nav class="topbar">
+        <a class="logo" href="{{ url_for('dashboard') }}">Achievo Trackr</a>
+        <div>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+    <main class="container narrow">
+        <section class="panel">
+            <h1>{{ title }}</h1>
+            {% include "_messages.html" %}
+            <form method="post" class="stack-form">
+                <label>Goal name<input name="name" required value="{{ habit.name if habit else '' }}" placeholder="Study"></label>
+                <label>Daily target<input type="number" min="1" name="target" required value="{{ habit.target if habit else 1 }}"></label>
+                <label>Unit<input name="unit" required value="{{ habit.unit if habit else 'hours' }}" placeholder="hours"></label>
+                <label>Color<input type="color" name="color" value="{{ habit.color if habit else '#58d6ff' }}"></label>
+                <button type="submit">Save goal</button>
+                {% if habit %}
+                    <button class="danger" type="submit" name="delete" value="1">Remove goal</button>
+                {% endif %}
+            </form>
+        </section>
+    </main>
+</body>
+</html>
